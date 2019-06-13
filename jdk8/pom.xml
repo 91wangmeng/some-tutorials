@@ -12,16 +12,8 @@
     <artifactId>jdk8</artifactId>
 
   <dependencies>
-      <dependency>
-          <groupId>org.projectlombok</groupId>
-          <artifactId>lombok</artifactId>
-          <version>1.18.4</version>
-      </dependency>
-      <dependency>
-          <groupId>ch.qos.logback</groupId>
-          <artifactId>logback-classic</artifactId>
-          <version>1.2.3</version>
-      </dependency>
+
+
       <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
       <dependency>
           <groupId>com.google.guava</groupId>
