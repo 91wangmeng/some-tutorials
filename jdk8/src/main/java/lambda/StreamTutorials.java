@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 /**
@@ -33,6 +34,17 @@ public class StreamTutorials {
         groupBy(personList);
         partitioningBy(personList);
         comprehensive(personList);
+        personList = init();
+        orderBySomeOrders(Arrays.asList("王五", "张三", "Jack", "Jerry", "Tom", "Alien", "Bob", "李四"), personList);
+
+    }
+
+    private static void orderBySomeOrders(List<String> orders, List<Person> personList) {
+        Map<String, Integer> itemSortMap = IntStream.range(0, orders.size())
+                .mapToObj(value -> Integer.valueOf(value))
+                .collect(Collectors.toMap((o -> orders.get(o)), (o -> o)));
+        List<String> orderNameList = personList.stream().sorted(Comparator.comparingInt(o -> itemSortMap.getOrDefault(o.getName(), Integer.MAX_VALUE))).map(Person::getName).collect(Collectors.toList());
+        Assert.assertEquals(orderNameList, orders);
     }
 
     private static void comprehensive(List<Person> personList) {
@@ -67,7 +79,7 @@ public class StreamTutorials {
                         .findFirst()
                         .orElseThrow(() -> new RuntimeException(stringListEntry.getKey() + "没人")))
                 .collect(Collectors.toList());
-        Assert.assertEquals(personArrayList,collect);
+        Assert.assertEquals(personArrayList, collect);
 
     }
 
@@ -86,7 +98,7 @@ public class StreamTutorials {
         Map<Boolean, List<Person>> groupByCountryWithStream = personList
                 .stream()
                 .collect(Collectors.partitioningBy(person -> "中国".equals(person.getCountry())));
-        Assert.assertEquals(groupByCountry,groupByCountryWithStream);
+        Assert.assertEquals(groupByCountry, groupByCountryWithStream);
     }
 
     private static void groupBy(List<Person> personList) {
@@ -104,8 +116,8 @@ public class StreamTutorials {
         Map<String, List<Person>> groupByCountryWithStream = personList
                 .stream()
                 .collect(Collectors.groupingBy(Person::getCountry));
-        Assert.assertEquals(groupByCountry,groupByCountryWithStream);
-;
+        Assert.assertEquals(groupByCountry, groupByCountryWithStream);
+        ;
     }
 
     private static void reduce(List<Person> personList) {
@@ -118,8 +130,8 @@ public class StreamTutorials {
         //使用Stream
         int sumByStream = personList.stream().mapToInt(Person::getAge).sum();
         int sumByStreamTwo = personList.stream().mapToInt(Person::getAge).reduce(0, (left, right) -> left + right);
-        Assert.assertEquals(sum,sumByStream);
-        Assert.assertEquals(sum,sumByStreamTwo);
+        Assert.assertEquals(sum, sumByStream);
+        Assert.assertEquals(sum, sumByStreamTwo);
     }
 
     private static void flatMap() {
@@ -140,7 +152,7 @@ public class StreamTutorials {
         List<Person> collect = classes.stream()
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
-        Assert.assertEquals(school,collect);
+        Assert.assertEquals(school, collect);
 
     }
 
@@ -166,7 +178,7 @@ public class StreamTutorials {
                 .limit(3)
                 .collect(Collectors.toList());
 
-        Assert.assertEquals(newPersonList,newPersonListByStream);
+        Assert.assertEquals(newPersonList, newPersonListByStream);
     }
 
     private static void map(List<Person> personList) {
@@ -180,7 +192,7 @@ public class StreamTutorials {
         List<String> nameListByStream = personList.stream()
                 .map(Person::getName)
                 .collect(Collectors.toList());
-        Assert.assertEquals(nameList,nameListByStream);
+        Assert.assertEquals(nameList, nameListByStream);
 
     }
 
@@ -210,7 +222,7 @@ public class StreamTutorials {
         List<Person> reversePersonList = personList.stream()
                 .sorted(Comparator.comparingInt(Person::getAge).reversed())
                 .collect(Collectors.toList());
-        Assert.assertArrayEquals(personList.toArray(),reversePersonList.toArray());
+        Assert.assertArrayEquals(personList.toArray(), reversePersonList.toArray());
 
     }
 
