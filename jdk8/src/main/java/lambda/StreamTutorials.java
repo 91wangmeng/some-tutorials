@@ -35,7 +35,7 @@ public class StreamTutorials {
         partitioningBy(personList);
         comprehensive(personList);
         personList = init();
-        orderBySomeOrders(Arrays.asList("王五", "张三", "Jack", "Jerry", "Tom", "Alien", "Bob", "李四"), personList);
+        orderBySomeOrders(Arrays.asList("张三",  "Jack", "Jerry", "Tom", "Alien", "Bob", "李四"), personList);
 
     }
 
@@ -43,7 +43,7 @@ public class StreamTutorials {
         Map<String, Integer> itemSortMap = IntStream.range(0, orders.size())
                 .mapToObj(value -> Integer.valueOf(value))
                 .collect(Collectors.toMap((o -> orders.get(o)), (o -> o)));
-        List<String> orderNameList = personList.stream().sorted(Comparator.comparingInt(o -> itemSortMap.getOrDefault(o.getName(), Integer.MAX_VALUE))).map(Person::getName).collect(Collectors.toList());
+        List<String> orderNameList = personList.stream().sorted(Comparator.comparingInt(o -> itemSortMap.getOrDefault(o.getName(), 0))).map(Person::getName).collect(Collectors.toList());
         Assert.assertEquals(orderNameList, orders);
     }
 
