@@ -37,7 +37,9 @@ public class CompletableFutureTutorials {
                 .sum();
         log.info("消耗时间:{},结果:{}", System.currentTimeMillis() - start, result);
 
-
+        for (int i = 0; i < 10; i++) {
+            completableFutures[i] = CompletableFuture.supplyAsync(CompletableFutureTutorials::step);
+        }
         start = System.currentTimeMillis();
         CompletableFuture<List<Integer>> listCompletableFuture = CompletableFuture.allOf(completableFutures)
                 .thenApply(aVoid ->
