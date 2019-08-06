@@ -25,6 +25,7 @@ public class StreamTutorials {
 
     public static void main(String[] args) {
         List<Person> personList = init();
+        foreach(personList);
         filler(personList);
         sorted(personList);
         map(personList);
@@ -35,8 +36,16 @@ public class StreamTutorials {
         partitioningBy(personList);
         comprehensive(personList);
         personList = init();
-        orderBySomeOrders(Arrays.asList("张三",  "Jack", "Jerry", "Tom", "Alien", "Bob", "李四"), personList);
+        orderBySomeOrders(Arrays.asList("张三", "Jack", "Jerry", "Tom", "Alien", "Bob", "李四"), personList);
 
+    }
+
+    private static void foreach(List<Person> personList) {
+        personList.stream()
+                .forEach(person -> {
+                    person.setName("王二小");
+                });
+        Assert.assertTrue(personList.stream().allMatch(person -> "王二小".equals(person.getName())));
     }
 
     private static void orderBySomeOrders(List<String> orders, List<Person> personList) {
@@ -255,9 +264,9 @@ public class StreamTutorials {
 
 
     private static List<Person> init() {
-        Person personOne = new Person("张三", 25, "中国");
+        Person personOne = new Person("张三", 18, "中国");
         Person personTwo = new Person("李四", 17, "中国");
-        Person personThree = new Person("王五", 33, "中国");
+        Person personThree = new Person("王五", 45, "中国");
         Person personFour = new Person("Jack", 16, "美国");
         Person personFive = new Person("Bob", 26, "美国");
         Person personSix = new Person("Alien", 18, "美国");
@@ -281,7 +290,8 @@ public class StreamTutorials {
     @ToString
     private static class Person {
         private String name;
-        private int age;
+        private Integer age;
         private String country;
     }
+
 }
