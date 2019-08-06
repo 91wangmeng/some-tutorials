@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
@@ -17,14 +17,12 @@ import java.util.concurrent.Executors;
  */
 @Slf4j
 public class SynchronizedTutorials {
-    private static final Executor EXECUTOR = Executors.newFixedThreadPool(10);
+    private static final ExecutorService EXECUTOR = Executors.newFixedThreadPool(10);
 
     public static void main(String[] args) {
-
-//        normalWithNormal();
+        normalWithNormal();
         staticWithStatic();
-
-
+        EXECUTOR.shutdown();
     }
 
     /*
@@ -67,6 +65,8 @@ public class SynchronizedTutorials {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            log.info("普通同步方法A执行完成");
+
         }
 
         synchronized void normalB() {
@@ -76,6 +76,8 @@ public class SynchronizedTutorials {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            log.info("普通同步方法B执行完成");
+
         }
 
         static synchronized void normalC() {
@@ -85,6 +87,8 @@ public class SynchronizedTutorials {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            log.info("普通同步方法C执行完成");
+
         }
 
         static synchronized void normalD() {
@@ -94,6 +98,8 @@ public class SynchronizedTutorials {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            log.info("普通同步方法D执行完成");
+
         }
     }
 
