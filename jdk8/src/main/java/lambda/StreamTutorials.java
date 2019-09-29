@@ -1,5 +1,6 @@
 package lambda;
 
+import com.google.common.collect.Maps;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,7 +25,10 @@ import java.util.stream.Stream;
 public class StreamTutorials {
 
     public static void main(String[] args) {
+        testNull();
         List<Person> personList = init();
+        //国家统计个数
+        Map<String, Long> countryCount = personList.stream().collect(Collectors.groupingBy(Person::getCountry, Collectors.counting()));
         foreach(personList);
         filler(personList);
         sorted(personList);
@@ -37,6 +41,16 @@ public class StreamTutorials {
         comprehensive(personList);
         personList = init();
         orderBySomeOrders(Arrays.asList("张三", "Jack", "Jerry", "Tom", "Alien", "Bob", "李四"), personList);
+
+    }
+
+    private static void testNull() {
+        List<Person> people = Arrays.asList(
+                new Person("1", null, "中国"),
+                new Person("1", null, "中国"),
+                new Person("1", 2, "中国")
+        );
+        List<Map.Entry<String, Integer>> collect = people.stream().map(p -> Maps.immutableEntry(p.getName(), p.getAge())).distinct().collect(Collectors.toList());
 
     }
 
