@@ -4,7 +4,9 @@ import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
+import java.time.temporal.WeekFields;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -18,6 +20,9 @@ import java.util.stream.Stream;
  */
 public class LocalDateTutorials {
     public static void main(String[] args) {
+        LocalDate localDate = LocalDate.now();
+        System.out.println(localDate.with(WeekFields.of(Locale.CHINA).dayOfWeek(), 1).atStartOfDay());
+        System.out.println(localDate.with(WeekFields.of(Locale.CHINA).dayOfWeek(), 7).atTime(LocalTime.MAX));
         //instant();
         //localDate();
         //localTime();
